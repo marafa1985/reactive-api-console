@@ -93,7 +93,7 @@ Build a **reactive API explorer tool** where users can:
 
 ### 3. 🌍 Bored API
 
-- `GET https://www.boredapi.com/api/activity/`
+- `GET  https://bored-api.appbrewery.com/random`
 - **Command**: `get activity`
 
 ### 4. 🔍 GitHub Users Search API

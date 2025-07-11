@@ -1,13 +1,16 @@
-import { defineConfig } from "vite";
+import { defineConfig, type AliasOptions } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
 
-// https://vite.dev/config/
+export const alias: AliasOptions = {
+  "@": path.resolve(__dirname, "./src"),
+  $lib: path.resolve(__dirname, "./src/lib"),
+  $store: path.resolve(__dirname, "./src/store"),
+};
+
 export default defineConfig({
   plugins: [react()],
   resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
+    alias: alias,
   },
 });
