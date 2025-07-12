@@ -6,10 +6,6 @@ export const apiSchema = z.object({
   name: z.string(),
   description: z.string(),
   baseUrl: z.string(),
-  getUrl: z
-    .function()
-    .args(z.string().optional(), z.string().optional())
-    .returns(z.string()),
   body: z.any().optional(),
   headers: z.record(z.string(), z.string()).optional(),
   method: z.enum(["GET", "POST", "PUT", "DELETE"]).optional().default("GET"),
@@ -17,6 +13,13 @@ export const apiSchema = z.object({
   commands: z.array(z.string()),
   examples: z.array(z.string()),
   isActive: z.boolean(),
+});
+
+export const apiWithHandlerSchema = apiSchema.extend({
+  getUrl: z
+    .function()
+    .args(z.record(z.string(), z.any()).optional(), z.string().optional())
+    .returns(z.string()),
   transformResponse: z
     .function()
     .args(z.any())
@@ -24,4 +27,6 @@ export const apiSchema = z.object({
     .optional(),
 });
 
-export type ApiEndpoint = z.infer<typeof apiSchema>;
+export type Api = z.infer<typeof apiSchema>;
+
+export type ApiWithHandler = z.infer<typeof apiWithHandlerSchema>;

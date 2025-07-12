@@ -1,8 +1,8 @@
 import { describe, it, expect } from "vitest";
-import { initialApiEndpoints } from "./apis-list";
+import { ApiList } from "./apis-list";
 
 const getApiByKey = (apiId: string) => {
-  const catFactsApi = initialApiEndpoints.find((api) => api.id == apiId);
+  const catFactsApi = ApiList.find((api) => api.id == apiId);
   if (!catFactsApi) {
     throw Error("can't find cat-facts");
   }

@@ -1,11 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { chatReducer } from "./feature/chatSlice/chatSlice";
-import { endpointApi } from "./feature/endpointApi/endpointApi";
+import { chatReducer } from "./feature/slices/chatSlice";
+import { endpointApi } from "./feature/apis/endpointApi";
+import { uiReducer } from "./feature/slices/uiSlice";
+import { apisReducer } from "./feature/slices/apisSlice";
 
 export const store = configureStore({
   reducer: {
     chat: chatReducer,
-    api: endpointApi.reducer,
+    ui: uiReducer,
+    apis: apisReducer,
+    endpointApi: endpointApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(endpointApi.middleware),

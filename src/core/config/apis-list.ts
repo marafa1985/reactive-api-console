@@ -1,10 +1,10 @@
-import { type ApiEndpoint } from "../entity";
+import type { Api, ApiWithHandler } from "../entity";
 
 export const headers = {
   "Content-Type": "application/json",
 };
 
-export const initialApiEndpoints: ApiEndpoint[] = [
+export const ApiList: ApiWithHandler[] = [
   {
     id: "cat-facts",
     name: "Cat Facts",
@@ -30,7 +30,7 @@ export const initialApiEndpoints: ApiEndpoint[] = [
     examples: ["get chuck joke", "search chuck karate", "search chuck car"],
     commands: ["get chuck joke", "search chuck karate", "search chuck car"],
     isActive: true,
-    getUrl: function (params?: string, body?: string) {
+    getUrl: function (params?: Record<string, unknown>, body?: string) {
       if (params || body) {
         return `${this.baseUrl}/search`;
       }
@@ -47,7 +47,7 @@ export const initialApiEndpoints: ApiEndpoint[] = [
     examples: ["get activity"],
     commands: ["get activity"],
     isActive: true,
-    getUrl: function (params?: string, body?: string) {
+    getUrl: function (params?: Record<string, unknown>, body?: string) {
       if (params || body) {
         return `${this.baseUrl}/filter`;
       }
@@ -83,3 +83,12 @@ export const initialApiEndpoints: ApiEndpoint[] = [
     },
   },
 ];
+
+export const initialApis: Api[] = ApiList.map(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  ({ getUrl, transformResponse, ...api }) => {
+    return {
+      ...api,
+    };
+  }
+);

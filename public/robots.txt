@@ -1,0 +1,21 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Disallow crawling of development and test files
+Disallow: /src/
+Disallow: /cypress/
+Disallow: /node_modules/
+Disallow: /dist/
+Disallow: /build/
+
+# Disallow crawling of configuration files
+Disallow: /*.config.*
+Disallow: /package.json
+Disallow: /pnpm-lock.yaml
+
+# Sitemap location (uncomment and update when you have a sitemap)
+# Sitemap: https://yourdomain.com/sitemap.xml
+
+# Crawl delay (optional - uncomment if you want to limit crawl rate)
+# Crawl-delay: 1 

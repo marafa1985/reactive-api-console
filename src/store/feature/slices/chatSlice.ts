@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit/react";
 import type { ApplicationState } from "../../store";
-import { endpointApi } from "../endpointApi/endpointApi";
+import { endpointApi } from "../apis/endpointApi";
 import type { ApiResponse } from "../../../core/entity";
 
 export type ChatState = {
