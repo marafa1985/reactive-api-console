@@ -1,17 +1,18 @@
-import { initialApis } from "@/core/config/apis-list";
-import type { Api } from "@/core/entity";
-import type { ApplicationState } from "@/store/store";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { Api } from "@/core/entity";
+import { apiRegistry } from "@/core/api/registry";
+import type { ApplicationState } from "@/store/store";
+import { BehaviorSubject } from "rxjs";
 
 export type ToggleApiPayload = {
   apiId: string;
 };
 export type ApisState = {
-  apis: Omit<Api, "getUrl">[];
+  apis: Api[];
 };
 
 const initialState: ApisState = {
-  apis: initialApis,
+  apis: apiRegistry.map(({ api }) => api),
 };
 
 const apisSlice = createSlice({
@@ -32,3 +33,8 @@ export const { toggleApi } = apisSlice.actions;
 export const apisReducer = apisSlice.reducer;
 
 export const selectApisState = (state: ApplicationState) => state.apis;
+
+export const selectActiveApisState = (state: ApplicationState) =>
+  state.apis.apis.filter((api) => api.isActive);
+
+export const activeApis$ = new BehaviorSubject<Api[]>([]);

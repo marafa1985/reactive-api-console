@@ -1,38 +1,58 @@
-import { createSlice } from "@reduxjs/toolkit/react";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit/react";
 import type { ApplicationState } from "../../store";
-import { endpointApi } from "../apis/endpointApi";
-import type { ApiResponse } from "../../../core/entity";
+import type { ChatMessage } from "@/core/entity";
+import { BehaviorSubject } from "rxjs";
 
 export type ChatState = {
-  entities: Record<string, ApiResponse>[];
+  messages: ChatMessage[];
+  isProcessing: boolean;
+  commandHistory: string[];
+  error: string | null;
 };
 
 const initialState: ChatState = {
-  entities: [],
+  messages: [],
+  isProcessing: false,
+  commandHistory: [],
+  error: null,
 };
 
-export const chatSlice = createSlice({
+const chatSlice = createSlice({
   name: "chat",
   initialState,
   reducers: {
-    resolveCommand: (state: ChatState) => {
-      state.entities = [...state.entities];
-    },
-  },
-  extraReducers: (builder) => {
-    builder.addMatcher(
-      endpointApi.endpoints.getApiResponse.matchFulfilled,
-      (state, action) => {
-        const response: ApiResponse = action.payload;
-        console.log("API Response:", response, "state:", state);
+    addMessage: (state, action: PayloadAction<ChatMessage>) => {
+      state.messages.push(action.payload);
+      if (action.payload.type === "user") {
+        state.commandHistory.push(action.payload.content);
       }
-    );
+    },
+    clearMessages: (state) => {
+      state.messages = [];
+    },
+    clearHistory: (state) => {
+      state.commandHistory = [];
+    },
+    removeMessage: (state, action: PayloadAction<string>) => {
+      const messageId = action.payload;
+      state.messages = state.messages.filter(
+        (message) => message.id !== messageId
+      );
+    },
+    clearError: (state) => {
+      state.error = null;
+    },
   },
 });
 
-export const { resolveCommand } = chatSlice.actions;
+export const { addMessage, clearMessages, removeMessage } = chatSlice.actions;
 
-// Other code such as selectors can use the imported `RootState` type
-export const selectChat = (state: ApplicationState) => state.chat.entities;
+export const selectChatMessages = (state: ApplicationState) =>
+  state.chat.messages;
+
+export const selectIsProcessing = (state: ApplicationState) =>
+  state.chat.isProcessing;
 
 export const chatReducer = chatSlice.reducer;
+
+export const userMessages$ = new BehaviorSubject<ChatMessage[]>([]);
