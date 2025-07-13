@@ -69,11 +69,11 @@
 }
 
 .card-header {
-  @apply p-6 border-b border-gray-100;
+  @apply p-4 border-b border-gray-100;
 }
 
 .card-content {
-  @apply p-6;
+  @apply p-4;
 }
 
 .bg-header {
@@ -82,5 +82,45 @@
     var(--color-navy-800) 0%,
     var(--color-navy-700) 100%
   );
-  @apply text-white;
+}
+
+.input-primary {
+  @apply w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 bg-white;
+}
+
+.input-search {
+  @apply w-full px-4 py-2.5 pl-10 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent transition-all duration-200 bg-white placeholder-gray-400;
+}
+
+.btn-primary {
+  @apply bg-orange-500 hover:bg-orange-600 text-white font-medium px-4 py-2 rounded-lg transition-all duration-200 shadow-sm hover:shadow-md;
+}
+
+.btn-secondary {
+  @apply bg-white hover:bg-gray-50 text-gray-700 font-medium px-4 py-2 rounded-lg border border-gray-200 transition-all duration-200 shadow-sm hover:shadow-md;
+}
+
+.btn-accent {
+  @apply bg-orange-500 hover:bg-orange-600 text-white font-medium px-3 py-1.5 rounded-lg transition-all duration-200 text-sm;
+}
+
+.tag {
+  @apply inline-flex items-center px-3 py-1 rounded-full font-medium border border-orange-200 text-orange-600 bg-orange-50 hover:bg-orange-100 transition-colors duration-200;
+}
+
+.tag-active {
+  @apply bg-orange-500 text-white border-orange-500;
+}
+
+/* Message styles */
+.message-user {
+  @apply bg-orange-50 border-orange-200 text-orange-900;
+}
+
+.message-system {
+  @apply bg-green-50 border-green-200 text-green-900;
+}
+
+.message-error {
+  @apply bg-red-50 border-red-200 text-red-900;
 }

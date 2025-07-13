@@ -8,4 +8,5 @@ export const chatMessageSchema = z.object({
   type: z.enum(["user", "system", "error"]),
   apiResponse: apiResponseSchema.optional(),
 });
+
 export type ChatMessage = z.infer<typeof chatMessageSchema>;
