@@ -12,7 +12,8 @@
     "start": "next start",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage.enabled --coverage.reportsDirectory ./coverage",
-    "cy:open": "cypress open"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
