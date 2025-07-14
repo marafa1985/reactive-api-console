@@ -69,3 +69,51 @@ jobs:
           pnpm install
       - name: Build
         run: pnpm run build
+
+  e2e:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
+          pnpm install
+
+      - name: Build application
+        run: pnpm run build
+
+      - name: Start application
+        run: |
+          pnpm run preview &
+          sleep 10
+
+      - name: Run Cypress E2E tests
+        run: pnpm run cy:run
+        env:
+          CYPRESS_baseUrl: http://localhost:4173
+
+      - name: Upload Cypress screenshots
+        uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+          if-no-files-found: ignore
+
+      - name: Upload Cypress videos
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: cypress-videos
+          path: cypress/videos
+          if-no-files-found: ignore
