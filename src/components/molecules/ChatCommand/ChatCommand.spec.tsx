@@ -34,7 +34,7 @@ describe("ChatCommand", () => {
       name: /send/i,
     }) as HTMLButtonElement;
 
-    fireEvent.change(input, { target: { value: "get cat fact" } });
+    fireEvent.input(input, { target: { value: "get cat fact" } });
 
     await waitFor(() => {
       expect(submitButton.disabled).toBe(false);
@@ -55,7 +55,7 @@ describe("ChatCommand", () => {
       name: /send/i,
     }) as HTMLButtonElement;
 
-    fireEvent.change(input, { target: { value: "  get cat fact  " } });
+    fireEvent.input(input, { target: { value: "  get cat fact  " } });
 
     await waitFor(() => {
       expect(submitButton.disabled).toBe(false);

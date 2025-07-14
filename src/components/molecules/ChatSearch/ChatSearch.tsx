@@ -16,7 +16,6 @@ export const ChatSearch = ({
     <div className="card-header">
       <ChatTitle />
 
-      {/* Chat Search */}
       <div className="relative">
         <input
           type="text"

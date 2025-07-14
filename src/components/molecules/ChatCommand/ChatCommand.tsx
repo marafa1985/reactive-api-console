@@ -27,6 +27,7 @@ export const ChatCommand = ({ onSendCommand }: ChatCommandProps) => {
     e.preventDefault();
     if (command.trim()) {
       onSendCommand(command.trim());
+      messageChange.next("");
       (e.target as HTMLFormElement).reset();
     }
   };
@@ -38,7 +39,7 @@ export const ChatCommand = ({ onSendCommand }: ChatCommandProps) => {
           <input
             id="command"
             type="text"
-            onChange={(e) => messageChange.next(e.target.value)}
+            onInput={(e) => messageChange.next(e.currentTarget.value)}
             placeholder="Type a command... (e.g., 'get cat fact')"
             className="input-primary flex-1"
           />
@@ -51,8 +52,8 @@ export const ChatCommand = ({ onSendCommand }: ChatCommandProps) => {
           </button>
         </div>
         <div className="text-xs text-gray-500">
-          💡 Try: "get cat fact", "search chuck kick", "get weather Berlin",
-          "help"
+          💡 Try: "help", "get cat fact", "search chuck kick", "get weather
+          Berlin", "history", "clear"
         </div>
       </form>
     </div>

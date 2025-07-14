@@ -1,18 +1,17 @@
+import { selectUIState, setSidebarOpen } from "@/store/feature/slices";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { cn } from "@/utils";
 
-type HeaderProps = {
-  onOpen: () => void;
-  sidebarOpen: boolean;
-};
-
-export const Header = ({ sidebarOpen, onOpen }: HeaderProps) => {
+export const Header = () => {
+  const dispatch = useAppDispatch();
+  const { sidebarOpen } = useAppSelector(selectUIState);
   return (
     <header className="header-nav p-4 shadow-sm" data-testid="header">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           {!sidebarOpen && (
             <button
-              onClick={onOpen}
+              onClick={() => dispatch(setSidebarOpen(true))}
               className={cn(
                 "p-2 hover:bg-white/10 rounded-lg transition-colors duration-200 text-white block sm:block cursor-pointer"
               )}

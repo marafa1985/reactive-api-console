@@ -1,17 +1,16 @@
 import { SideBarHeader, AvailableAPIs } from "@/components";
+import {
+  selectUIState,
+  setSidebarOpen,
+  toggleApi,
+} from "@/store/feature/slices";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { cn } from "@/utils";
 
-type SidebarProps = {
-  onToggleApi: (apiId: string) => void;
-  onClose: () => void;
-  sidebarOpen: boolean;
-};
+export const Sidebar = () => {
+  const dispatch = useAppDispatch();
 
-export const Sidebar = ({
-  sidebarOpen,
-  onToggleApi,
-  onClose,
-}: SidebarProps) => {
+  const { sidebarOpen } = useAppSelector(selectUIState);
   return (
     <aside
       data-testid="sidebar"
@@ -21,9 +20,15 @@ export const Sidebar = ({
       )}
     >
       <article className="sidebar h-full flex flex-col">
-        <SideBarHeader onClose={onClose} data-testid="sidebar-header" />
+        <SideBarHeader
+          onClose={() => dispatch(setSidebarOpen(false))}
+          data-testid="sidebar-header"
+        />
 
-        <AvailableAPIs onToggleApi={onToggleApi} data-testid="api-list" />
+        <AvailableAPIs
+          onToggleApi={(apiId) => dispatch(toggleApi({ apiId }))}
+          data-testid="api-list"
+        />
       </article>
     </aside>
   );
