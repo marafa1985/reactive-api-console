@@ -11,18 +11,6 @@ import {
 } from "@/store/feature/slices";
 import type { Api } from "@/core/entity";
 
-vi.mock("../../molecules/Commands/Commands", () => ({
-  Commands: ({ commands }: { commands: string[] }) => (
-    <div data-testid="commands">
-      {commands.map((command, index) => (
-        <div key={index} data-testid={`command-${index}`}>
-          {command}
-        </div>
-      ))}
-    </div>
-  ),
-}));
-
 describe("APIList", () => {
   const mockOnToggleApi = vi.fn();
 

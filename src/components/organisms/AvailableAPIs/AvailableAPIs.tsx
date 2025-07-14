@@ -1,4 +1,4 @@
-import { Commands } from "../../molecules/Commands/Commands";
+import { UserCommandInput } from "@/components";
 import { activeApis$, selectApisState } from "@/store/feature/slices";
 import { useAppSelector } from "@/store/hooks";
 
@@ -43,7 +43,7 @@ export const AvailableAPIs = ({ onToggleApi, ...rest }: AvailableAPIsProps) => {
             />
           </header>
 
-          {api.isActive && <Commands commands={api.commands} />}
+          {api.isActive && <UserCommandInput commands={api.commands} />}
         </li>
       ))}
     </ul>

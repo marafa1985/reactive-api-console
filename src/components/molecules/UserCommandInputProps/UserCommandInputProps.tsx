@@ -1,8 +1,8 @@
-type CommandsProps = {
+type UserCommandInputProps = {
   commands: string[];
 };
 
-export const Commands = ({ commands }: CommandsProps) => {
+export const UserCommandInput = ({ commands }: UserCommandInputProps) => {
   return (
     <section className="mt-3 pt-3 border-t border-gray-200">
       <h4 className="text-xs font-medium text-gray-700 mb-2">Commands:</h4>

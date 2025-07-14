@@ -1,5 +1,5 @@
 export * from "./SideBarHeader/SideBarHeader";
-export * from "./Commands/Commands";
+export * from "./UserCommandInputProps/UserCommandInputProps";
 export * from "./ChatSearch/ChatSearch";
 export * from "./ChatCommand/ChatCommand";
 export * from "./ChatLog/ChatLog";

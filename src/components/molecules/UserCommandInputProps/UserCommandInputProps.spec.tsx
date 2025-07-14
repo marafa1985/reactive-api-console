@@ -1,10 +1,10 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
-import { Commands } from "./Commands";
+import { UserCommandInput } from "./UserCommandInputProps";
 
 describe("Commands", () => {
   it("should render with empty commands array", () => {
-    render(<Commands commands={[]} />);
+    render(<UserCommandInput commands={[]} />);
 
     expect(screen.getByText("Commands:")).toBeDefined();
     expect(screen.getByRole("list")).toBeDefined();
@@ -12,7 +12,7 @@ describe("Commands", () => {
 
   it("should render with single command", () => {
     const commands = ["npm install"];
-    render(<Commands commands={commands} />);
+    render(<UserCommandInput commands={commands} />);
 
     expect(screen.getByText("Commands:")).toBeDefined();
     expect(screen.getByText("npm install")).toBeDefined();
@@ -21,7 +21,7 @@ describe("Commands", () => {
 
   it("should render with multiple commands", () => {
     const commands = ["npm install", "npm run dev", "npm test"];
-    render(<Commands commands={commands} />);
+    render(<UserCommandInput commands={commands} />);
 
     expect(screen.getByText("Commands:")).toBeDefined();
     expect(screen.getByText("npm install")).toBeDefined();
@@ -34,7 +34,7 @@ describe("Commands", () => {
 
   it("should render commands in correct order", () => {
     const commands = ["first", "second", "third"];
-    render(<Commands commands={commands} />);
+    render(<UserCommandInput commands={commands} />);
 
     const listItems = screen.getAllByRole("listitem");
     expect(listItems).toHaveLength(3);
