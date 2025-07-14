@@ -14,8 +14,10 @@ import type { UserCommand } from "@/core/entity";
 import { useChatMessage } from "./useChatMessage";
 import { isSpecialCommand, useSpecialCommand } from "./useSpecialCommand";
 import { activeApis$ } from "@/store/feature/slices";
+import { useAppDispatch } from "@/store/hooks";
 
 export const useApiCommands = () => {
+  const dispatch = useAppDispatch();
   const { userMessage, systemMessage, errorMessage } = useChatMessage();
   const { handleSpecialCommand } = useSpecialCommand();
   const [userCommand, setCommand] = useState<UserCommand>({
@@ -46,9 +48,13 @@ export const useApiCommands = () => {
                 apiCommands.map((response) => response.executeCommand(command))
               ).pipe(
                 tap((responses) => {
-                  responses.forEach((apiResponse) =>
-                    systemMessage(`✅ Executed: ${command}`, apiResponse)
-                  );
+                  responses.forEach((apiResponse) => {
+                    dispatch({
+                      type: "responses/addResponse",
+                      payload: { apiResponse, commandId: apiResponse.id },
+                    });
+                    systemMessage(`✅ Executed: ${command}`, apiResponse);
+                  });
                 })
               );
             })
@@ -65,6 +71,7 @@ export const useApiCommands = () => {
       processCommand$.unsubscribe();
     };
   }, [
+    dispatch,
     errorMessage,
     handleSpecialCommand,
     systemMessage,

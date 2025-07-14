@@ -3,6 +3,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import { uiReducer, setSidebarOpen, selectUIState } from "./uiSlice";
 import { chatReducer } from "./chatSlice";
 import { apisReducer } from "./apisSlice";
+import { filtersReducer } from "./filtersSlice";
+import { responsesReducer } from "./responsesSlice";
 
 describe("uiSlice", () => {
   const createTestStore = () => {
@@ -11,6 +13,8 @@ describe("uiSlice", () => {
         chat: chatReducer,
         ui: uiReducer,
         apis: apisReducer,
+        responses: responsesReducer,
+        filters: filtersReducer,
       },
     });
   };
@@ -42,6 +46,12 @@ describe("uiSlice", () => {
 
     expect(selectedState).toEqual({
       sidebarOpen: false,
+      selectedPanel: null,
+      dragState: {
+        isDragging: false,
+        draggedApiId: null,
+        dragOverApiId: null,
+      },
     });
   });
 
@@ -54,6 +64,12 @@ describe("uiSlice", () => {
 
     expect(selectedState).toEqual({
       sidebarOpen: false,
+      selectedPanel: null,
+      dragState: {
+        isDragging: false,
+        draggedApiId: null,
+        dragOverApiId: null,
+      },
     });
   });
 });
