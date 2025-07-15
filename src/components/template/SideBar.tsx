@@ -15,7 +15,7 @@ export const Sidebar = () => {
     <aside
       data-testid="sidebar"
       className={cn(
-        "transition-all duration-300 overflow-hidden",
+        "transition-all duration-300 ",
         sidebarOpen ? "w-80" : "w-0"
       )}
     >

@@ -16,7 +16,7 @@ type UIState = {
 };
 
 const initialState: UIState = {
-  sidebarOpen: true,
+  sidebarOpen: false,
   selectedPanel: null,
   dragState: {
     isDragging: false,

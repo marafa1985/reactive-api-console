@@ -55,7 +55,7 @@ const ApiPanelHeader = ({ orderedApis }: DragPanelProps) => {
 
   return (
     <header className="border-b border-gray-200 bg-white relative">
-      <ul className="flex overflow-x-auto">
+      <ul className="flex flex-col sm:flex-row overflow-x-auto">
         {orderedApis.map((api) => {
           const apiResponses = responses.filter((res) => res.apiId === api.id);
           return (
