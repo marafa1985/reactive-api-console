@@ -10,25 +10,40 @@ export const fetchCommand = (
   api: Api
 ): Observable<ApiResponse> => {
   return new Observable<ApiResponse>((subscriber) => {
-    fetch(apiUrl, {
-      method: api.method || "GET",
-      headers,
-      body: api.body || undefined,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        subscriber.next({
-          id: (Date.now() + 1).toString(),
-          apiId: api.id,
-          timestamp: Date.now(),
-          data,
-          error: undefined,
-          loading: false,
-        });
-        subscriber.complete();
+    try {
+      fetch(apiUrl, {
+        method: api.method || "GET",
+        headers,
+        body: api.body || undefined,
       })
-      .catch((error) => {
-        subscriber.error(error);
-      });
+        .then((response) => {
+          if (response.status === 500) {
+            return {
+              error: {
+                status: response.status,
+                statusText: response.statusText,
+              },
+            };
+            throw new Error(response.statusText);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          subscriber.next({
+            id: (Date.now() + 1).toString(),
+            apiId: api.id,
+            timestamp: Date.now(),
+            data: data.error || data,
+            error: data?.error,
+            loading: false,
+          });
+          subscriber.complete();
+        })
+        .catch((error) => {
+          subscriber.error(error);
+        });
+    } catch (error) {
+      subscriber.error(error);
+    }
   });
 };
