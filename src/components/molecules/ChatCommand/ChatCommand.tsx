@@ -1,34 +1,32 @@
 import { useEffect, useState } from "react";
-import { BehaviorSubject, debounceTime, tap } from "rxjs";
+import { debounceTime, BehaviorSubject as Subject, tap } from "rxjs";
 
 type ChatCommandProps = {
   onSendCommand: (command: string) => void;
 };
 
-const messageChange = new BehaviorSubject<string>("");
+const messageChange = new Subject<string>("");
 const messageChange$ = messageChange.asObservable();
 
 export const ChatCommand = ({ onSendCommand }: ChatCommandProps) => {
-  const [command, setCommand] = useState("");
-
+  const [disabled, setDisabled] = useState<boolean>(true);
   useEffect(() => {
-    const subscription = messageChange$
+    const subscription$ = messageChange$
       .pipe(
         debounceTime(500),
-        tap((value) => {
-          setCommand(value);
-        })
+        tap((value) => setDisabled(!value.trim()))
       )
       .subscribe();
-    return () => subscription.unsubscribe();
+    return () => subscription$.unsubscribe();
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (command.trim()) {
-      onSendCommand(command.trim());
-      messageChange.next("");
+
+    if (messageChange.value.trim()) {
+      onSendCommand(messageChange.value.trim());
       (e.target as HTMLFormElement).reset();
+      setDisabled(true);
     }
   };
 
@@ -45,7 +43,7 @@ export const ChatCommand = ({ onSendCommand }: ChatCommandProps) => {
           />
           <button
             type="submit"
-            disabled={!command.trim()}
+            disabled={disabled}
             className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
           >
             Send

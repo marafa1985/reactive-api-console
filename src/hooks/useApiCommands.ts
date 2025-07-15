@@ -49,12 +49,22 @@ export const useApiCommands = () => {
               ).pipe(
                 tap((responses) => {
                   responses.forEach((apiResponse) => {
+                    if (apiResponse.error) {
+                      errorMessage(userCommand.command);
+                      return;
+                    }
                     dispatch({
                       type: "responses/addResponse",
                       payload: { apiResponse, commandId: apiResponse.id },
                     });
                     systemMessage(`✅ Executed: ${command}`, apiResponse);
                   });
+                }),
+                catchError(() => {
+                  errorMessage(
+                    `${userCommand.command} ==> Network error, please check your internet connection.`
+                  );
+                  return EMPTY;
                 })
               );
             })
