@@ -1,8 +1,8 @@
-export interface HighlightMatch {
+export type HighlightMatch = {
   path: string;
   value: string;
   matchedText: string;
-}
+};
 
 export function findMatches(
   obj: unknown,

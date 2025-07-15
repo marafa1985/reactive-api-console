@@ -14,7 +14,8 @@
     "test:coverage": "vitest --coverage.enabled --coverage.reportsDirectory ./coverage",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "cy:start": "concurrently \"pnpm run dev\" \"cypress run\""
+    "cy:start": "concurrently \"pnpm run dev\" \"cypress run\"",
+    "cy:component": "cypress run --component"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
