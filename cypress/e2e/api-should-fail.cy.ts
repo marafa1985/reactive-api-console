@@ -12,6 +12,7 @@ describe("API Failing Cases", () => {
   });
 
   it("should show error if command is valid but API is disabled", () => {
+    cy.get('[data-testid="open-sidebar-btn"]').click();
     // Assume Cat Facts is enabled by default, so we disable it first
     cy.contains("Cat Facts").click(); // This should disable the API
     cy.contains("Cat Facts").parent().not("have.class", "ring-orange-500");

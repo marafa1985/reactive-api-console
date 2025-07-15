@@ -16,10 +16,13 @@ describe("Reactive API Console", () => {
     cy.get("button").contains("Send").click();
 
     cy.contains("Available Commands").should("be.visible");
-    cy.contains("get cat fact").should("be.visible");
+    cy.get(".message-system > .items-start > .flex-1 > .whitespace-pre-wrap")
+      .contains("get cat fact")
+      .should("be.visible");
   });
 
   it("should toggle API activation", () => {
+    cy.get('[data-testid="open-sidebar-btn"]').click();
     cy.get('[data-testid="api-list-item-cat-facts"]').should(
       "have.class",
       "ring-orange-500"
@@ -41,23 +44,5 @@ describe("Reactive API Console", () => {
 
     cy.wait("@getCatFact");
     cy.contains("✅ Executed: get cat fact").should("be.visible");
-  });
-
-  it("should filter results globally", () => {
-    // First execute some commands to get results
-    cy.intercept("GET", "https://catfact.ninja/fact", {
-      body: { fact: "Cats are amazing animals" },
-    }).as("getCatFact");
-
-    cy.get('input[placeholder*="Type a command"]').type("get cat fact");
-    cy.get("button").contains("Send").click();
-    cy.wait("@getCatFact");
-
-    // Now test global search
-    cy.get(".input-search").type("amazing");
-
-    // Results should be filtered
-    cy.contains("Cat Facts").click();
-    cy.contains("cat").should("be.visible");
   });
 });

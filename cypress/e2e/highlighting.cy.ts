@@ -25,11 +25,13 @@ describe("Highlighting", () => {
     cy.get("button").contains("Send").click();
     cy.wait("@getCatFact");
 
+    cy.get(":nth-child(1) > .panel-tab").click();
     // Now test global search
-    cy.get(".input-search").type("amazing");
+    cy.get('input[placeholder*="Filter results in this panel..."]').type(
+      "amazing"
+    );
 
     // Results should be filtered
-    cy.contains("Cat Facts").click();
-    cy.contains("cat").should("be.visible");
+    cy.get("li > .p-4").contains("amazing").should("be.visible");
   });
 });
